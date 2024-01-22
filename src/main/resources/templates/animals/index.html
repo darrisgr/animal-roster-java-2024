@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragments :: headFrag">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div th:if="${roster.size()}">
+    <h1>Here are the animals! :)</h1>
+    <table class="table table-striped">
+        <tr><th scope="col">Animal Name</th><th scope="col">Caretaker</th></tr>
+        <tr th:each="item : ${roster}">
+            <td th:text="${item.key}"></td>
+            <td th:text="${item.value}"></td>
+        </tr>
+    </table>
+</div>
+<h1 th:unless="${roster.size()}">Nobody here but us chickens!</h1>
+<ul>
+    <li><a href="/animals/add">Add Animal</a></li>
+</ul>
+</body>
+</html>
