@@ -1,11 +1,10 @@
 package org.launchcode.animalroster.controllers;
 
+import data.AnimalData;
+import models.Animal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
@@ -13,11 +12,10 @@ import java.util.*;
 @RequestMapping("/animals") // index method routes to localhost:8080/animals
 public class AnimalsController {
 
-    private final Map<String, String> roster = new LinkedHashMap<>();
 
     @GetMapping
     public String index(Model model) {
-        model.addAttribute("roster", roster);
+        model.addAttribute("roster", AnimalData.getAll());
         return "animals/index"; // templates/animals/index.html
     }
 
@@ -27,8 +25,27 @@ public class AnimalsController {
     }
 
     @PostMapping("/add")
-    public String processAddForm(@RequestParam String caretaker, String animal) {
-        roster.put(animal, caretaker);
+    public String processAddForm(@ModelAttribute Animal newAnimal) {
+        AnimalData.add(newAnimal);
         return "redirect:/animals";
     }
+
+    @GetMapping("/remove")
+    public String remove(Model model) {
+        model.addAttribute("title", "Remove Animal(s)");
+        model.addAttribute("roster", AnimalData.getAll());
+        return "animals/remove";
+    }
+
+    @PostMapping("/remove")
+    public String processRemoveAnimalForm(@RequestParam(required = false) int[] animalIds) {
+        if (animalIds != null) {
+            for (int id : animalIds) {
+                AnimalData.remove(id);
+            }
+        }
+
+        return "redirect:/animals";
+    }
+
 }

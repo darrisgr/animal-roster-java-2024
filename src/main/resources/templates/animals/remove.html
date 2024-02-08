@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragments :: headFrag">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form th:if="${roster.size()}" method="post">
+    <th:block th:each="animal : ${roster}">
+        <div class="form-group">
+            <label><span th:text="${animal.name}"></span>
+                <input type="checkbox" name="animalIds" th:value="${animal.id}" class="form-control">
+            </label>
+        </div>
+    </th:block>
+
+    <input type="submit" value="Remove Animal(s)" class="btn btn-danger">
+</form>
+
+<div th:unless="${roster.size()}">
+    <h1>You have no animals to evict!</h1>
+    <ul>
+        <li><a href="/animals/add">Add Animal</a></li>
+    </ul>
+</div>
+</body>
+</html>

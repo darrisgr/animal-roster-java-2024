@@ -8,16 +8,18 @@
 <div th:if="${roster.size()}">
     <h1>Here are the animals! :)</h1>
     <table class="table table-striped">
-        <tr><th scope="col">Animal Name</th><th scope="col">Caretaker</th></tr>
+        <tr><th scope="col">ID</th><th scope="col">Animal Name</th><th scope="col">Caretaker</th></tr>
         <tr th:each="item : ${roster}">
-            <td th:text="${item.key}"></td>
-            <td th:text="${item.value}"></td>
+            <td th:text="${item.id}"></td>
+            <td th:text="${item.name}"></td>
+            <td th:text="${item.caretaker}">No caretaker data (yet)</td>
         </tr>
     </table>
 </div>
 <h1 th:unless="${roster.size()}">Nobody here but us chickens!</h1>
 <ul>
     <li><a href="/animals/add">Add Animal</a></li>
+    <li><a href="/animals/remove">Remove Animal</a></li>
 </ul>
 </body>
 </html>
